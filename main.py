@@ -40,75 +40,108 @@ running = True
 i = 0
 print(bcolors.FAIL + bcolors.BOLD + "\nAN ENEMY ATTACKS!" + bcolors.ENDC)
 
-while running:
-    print("\n===================================================\n")
-    player.choose_action()
-    choice = input("Choose action:")
-    index = int(choice) - 1
 
-    if index == 0:
-        damage = player.generate_damage()
-        enemy.take_damage(damage)
-        print(playerStr, "attacked for", damage, "points of damage.    Enemy HP:", enemy.get_hp())
-        print("\nYour HP:", bcolors.OKGREEN + bcolors.BOLD + str(player.get_hp()) + "/" + str(player.get_maxhp()) + bcolors.ENDC)
+def use_magic():
+    global choice, index
+    while True:
 
-    elif index == 1:
+        current_player_mp = player.get_mp()
+        enough_mana = False
 
-        while True:
-
-            current_player_mp = player.get_mp()
-            enough_mana = False
-
-            for spell in player.magic:
-                if current_player_mp > spell.get_spell_mp_cost():
-                    enough_mana = True
-                    break
-
-            if not enough_mana:
-                print(bcolors.FAIL + "\nMP is too low to use any spells!\n" + bcolors.ENDC)
+        for spell in player.magic:
+            if current_player_mp > spell.get_spell_mp_cost():
+                enough_mana = True
                 break
 
-            player.choose_magic()
-            choice = input("\nChoose magic:")
-            index = int(choice) - 1
-            chosen_spell = player.magic[index]
-            spell_cost = chosen_spell.get_spell_mp_cost()
-            spell_name = chosen_spell.get_spell_name()
-            spell_damage = chosen_spell.generate_damage()
-            spell_type = chosen_spell.type
+        if not enough_mana:
+            print(bcolors.FAIL + "\nMP is too low to use any spells!\n" + bcolors.ENDC)
+            break
 
-            if spell_cost > current_player_mp:
-                print(bcolors.FAIL + "\nNot enough MP, choose another spell!\n" + bcolors.ENDC)
+        player.choose_magic()
+        choice = input("\nChoose magic or type 'b' to go back a menu :")
+
+        if choice == "b":
+            return False
+
+        index = int(choice) - 1
+        chosen_spell = player.magic[index]
+        spell_cost = chosen_spell.get_spell_mp_cost()
+        spell_name = chosen_spell.get_spell_name()
+        spell_damage = chosen_spell.generate_damage()
+        spell_type = chosen_spell.type
+
+        if spell_cost > current_player_mp:
+            print(bcolors.FAIL + "\nNot enough MP, choose another spell!\n" + bcolors.ENDC)
+        else:
+            player.mp -= spell_cost
+
+            if spell_type == "white":
+                heals = spell_damage
+                player.heal(heals)
+                print(playerStr, "healed for", heals, "points of", player.magic[index].get_spell_name(),
+                      "    New HP:", player.get_hp())
             else:
-                player.mp -= spell_cost
+                magic_damage = spell_damage
+                enemy.take_damage(magic_damage)
 
-                if spell_type == "white":
-                    heals = spell_damage
-                    player.heal(heals)
-                    print(playerStr, "healed for", heals, "points of", player.magic[index].get_spell_name(),
-                          "    New HP:", player.get_hp())
-                else:
-                    magic_damage = spell_damage
-                    enemy.take_damage(magic_damage)
+                print(playerStr, "attacked for", magic_damage, "points of", player.magic[index].get_spell_name())
+            break
 
-                    print(playerStr, "attacked for", magic_damage, "points of", player.magic[index].get_spell_name())
-                break
 
-    elif index == 2:
-        player.choose_item()
-        choice = input("\nChoose item:")
+def use_item():
+    global choice
+    player.choose_item()
+    choice = input("\nChoose item or type 'b' to go back a menu :")
+
+    if choice == "b":
+        return False
+
+
+def use_melee():
+    damage = player.generate_damage()
+    enemy.take_damage(damage)
+    print(playerStr, "attacked for", damage, "points of damage.    Enemy HP:", enemy.get_hp())
+    print("\nYour HP:",
+          bcolors.OKGREEN + bcolors.BOLD + str(player.get_hp()) + "/" + str(player.get_maxhp()) + bcolors.ENDC)
+
+
+def enemy_attack():
+    global index
+    enemy_choice = random.randrange(1, 2)
+    index = int(enemy_choice) - 1
+    if index == 0:
+        enemy_damage = enemy.generate_damage()
+        player.take_damage(enemy_damage)
+        print(enemyStr, "attacks for", enemy_damage, "points of damage.")
+
+
+while running:
+
+    action_taken = False
+
+    while not action_taken:
+
+        print("\n===================================================\n")
+        player.choose_action()
+        choice = input("Choose action:")
+        index = int(choice) - 1
+
+        action_taken = True
+
+        if index == 0:
+            action_taken = use_melee()
+
+        elif index == 1:
+            action_taken = use_magic()
+
+        elif index == 2:
+            action_taken = use_item()
 
     if enemy.get_hp() == 0:
         print(enemyStr, "died! GOODJOB!!!")
         break
 
-    enemy_choice = random.randrange(1, 2)
-    index = int(enemy_choice) - 1
-
-    if index == 0:
-        enemy_damage = enemy.generate_damage()
-        player.take_damage(enemy_damage)
-        print(enemyStr, "attacks for", enemy_damage, "points of damage.")
+    enemy_attack()
 
     print("---------------------------------")
     print("Enemy HP:",
@@ -119,12 +152,6 @@ while running:
     print("Your MP:",
           bcolors.OKBLUE + bcolors.BOLD + str(player.get_mp()) + "/" + str(player.get_maxmp()) + bcolors.ENDC)
 
-
     if player.get_hp() == 0:
         print(playerStr, "\ndied! GAMEOVER!!!")
         break
-
-
-
-
-
