@@ -7,7 +7,7 @@ To play the game, you must first download and install it on your computer. Once 
 The game is played with keyboard-based actions. You can move your character around the screen using the arrow keys. You can perform melee attacks by pressing the "A" key and magic attacks by pressing the "M" key. You can also use items like potions, elixirs, and grenades by pressing the "I" key.
 
 ## Features
-###Melee Attacks
+### Melee Attacks
 Melee attacks are a type of physical attack that can be performed by pressing the "A" key. These attacks are usually more powerful than magic attacks, but they require the player to be in close proximity to the enemy.
 
 ### Magic Attacks
