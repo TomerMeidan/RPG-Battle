@@ -1,4 +1,4 @@
-RPG Battle Game
+# RPG Battle Game
 This is an RPG battle game that is played with keyboard-based actions. The game includes several features such as melee attacks, magic attacks, and the use of items like potions, elixirs, and grenades.
 
 How to Play
