@@ -26,7 +26,7 @@ The enemy has the following stats:
 * HP (Health Points): represents the amount of damage the enemy can take before being defeated.
 * Attack Power: represents the amount of damage the enemy's attacks deal.
 * Magic Power: represents the amount of damage the enemy's magic attacks deal.
-*
+
 During their turn, the enemy will attack the player.
 
 ## Built With
