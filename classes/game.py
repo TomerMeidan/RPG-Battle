@@ -1,7 +1,7 @@
 ## Related classes for the RPG game
 
 import random
-from .magic import Spell
+from math import ceil
 
 class bcolors:
     HEADER = '\033[95m'
@@ -15,7 +15,8 @@ class bcolors:
 
 class Person:
 
-    def __init__(self, hp, mp, atk, df, magic, items):
+    def __init__(self, name , hp, mp, atk, df, magic, items):
+        self.name = name
         self.maxhp = hp
         self.hp = hp
         self.maxmp = mp
@@ -78,11 +79,70 @@ class Person:
         for spell in self.magic:
             print("   " + str(i) + ":", spell.name, "(cost:", str(spell.cost) + ")")
             i += 1
+        print("\n")
 
     def choose_item(self):
         i = 1
         print("\n" + bcolors.OKBLUE + bcolors.BOLD + "Items" + bcolors.ENDC)
         for item in self.items:
-            print("   " + str(i) + ":", item.name, ":", item.description)
+            print("   " + str(i) + ":", item["name"].name, ":", item["name"].description, ": x" + str(item["quantity"]))
             i += 1
+        print("\n")
+
+    def show_stats(self):
+
+        max_health_blocks = 25
+        max_mana_blocks = 10
+
+        stats_string = bcolors.BOLD
+        stats_string += self.name + ":      "
+        health_string = str(self.hp) + "/" + str(self.maxhp)
+
+        stats_string += self.reset_white_spaces(health_string)
+        stats_string += " |" + bcolors.OKGREEN
+        health_blocks_left = int(ceil((self.hp / self.maxhp) * max_health_blocks))
+
+        for i in range(health_blocks_left):
+            stats_string += "█"
+
+        for i in range(max_health_blocks - health_blocks_left):
+            stats_string += " "
+
+        stats_string += bcolors.ENDC + "|  "
+
+        mana_string = str(self.mp) + "/" + str(self.maxmp)
+        stats_string += self.reset_white_spaces(mana_string)
+
+        stats_string += "|" + bcolors.OKBLUE
+
+        number_of_mana_block = int(ceil((self.mp / self.maxmp) * max_mana_blocks))
+
+        for i in range(number_of_mana_block):
+            stats_string += "█"
+
+        for i in range(max_mana_blocks - number_of_mana_block):
+            stats_string += " "
+
+        stats_string += bcolors.ENDC + "|"
+
+        print(stats_string)
+
+    def reset_white_spaces(self, string):
+        current_hp = ""
+        if len(string) < 9:
+            decreased = 9 - len(string)
+
+            while decreased > 0:
+                current_hp += " "
+                decreased -= 1
+
+            current_hp += string
+        else:
+            current_hp = string
+        return current_hp
+
+
+
+
+
 
