@@ -68,7 +68,7 @@ class Person:
 
     def choose_action(self):
         i = 1
-        print("\n" + bcolors.OKBLUE + bcolors.BOLD + "Actions" + bcolors.ENDC)
+        print(bcolors.OKBLUE + bcolors.BOLD + "Actions" + bcolors.ENDC)
         for item in self.actions:
             print("   " + str(i) + ":", item)
             i += 1
@@ -89,17 +89,38 @@ class Person:
             i += 1
         print("\n")
 
+    def show_enemy_stats(self):
+
+        max_health_blocks = 100
+
+        stats_string = bcolors.BOLD + self.name + ":      "
+
+        health_string = str(self.hp) + "/" + str(self.maxhp)
+        stats_string += self.reset_white_spaces(health_string) + " |" + bcolors.FAIL
+
+        health_blocks_left = int(ceil((self.hp / self.maxhp) * max_health_blocks))
+
+        for i in range(health_blocks_left):
+            stats_string += "█"
+
+        for i in range(max_health_blocks - health_blocks_left):
+            stats_string += " "
+
+        stats_string += bcolors.ENDC + "|  "
+
+        print(stats_string)
+
+
     def show_stats(self):
 
         max_health_blocks = 25
         max_mana_blocks = 10
 
-        stats_string = bcolors.BOLD
-        stats_string += self.name + ":      "
-        health_string = str(self.hp) + "/" + str(self.maxhp)
+        stats_string = bcolors.BOLD + self.name + ":      "
 
-        stats_string += self.reset_white_spaces(health_string)
-        stats_string += " |" + bcolors.OKGREEN
+        health_string = str(self.hp) + "/" + str(self.maxhp)
+        stats_string += self.reset_white_spaces(health_string) + " |" + bcolors.OKGREEN
+
         health_blocks_left = int(ceil((self.hp / self.maxhp) * max_health_blocks))
 
         for i in range(health_blocks_left):
@@ -111,10 +132,7 @@ class Person:
         stats_string += bcolors.ENDC + "|  "
 
         mana_string = str(self.mp) + "/" + str(self.maxmp)
-        stats_string += self.reset_white_spaces(mana_string)
-
-        stats_string += "|" + bcolors.OKBLUE
-
+        stats_string += self.reset_white_spaces(mana_string) + "|" + bcolors.OKBLUE
         number_of_mana_block = int(ceil((self.mp / self.maxmp) * max_mana_blocks))
 
         for i in range(number_of_mana_block):

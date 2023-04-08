@@ -4,49 +4,44 @@ from classes.game import Person, bcolors
 from classes.magic import Spell
 from classes.inventory import Item
 
-# Create Items
-small_potion = Item("Small Potion", "potion", "Heals 50 HP", 50)
-medium_potion = Item("Medium Potion", "potion", "Heals 100 HP", 100)
-large_potion = Item("Large Potion", "potion", "Heals 100 HP", 500)
-elixir = Item("Small Elixir", "elixir", "Restores full HP/MP of one party member", 9999)
-large_elixir = Item("Large Elixir", "elixir", "Restores full HP/MP of all party members", 9999)
-grenade = Item("Grenade", "attack", "Deals 500 damage", 500)
+def instantiate_game_parameters():
+    global player1, enemy, party, enemyStr, playerStr
 
-# Create Inventory
-inventory = [{"name": small_potion, "quantity": 5}, {"name": medium_potion, "quantity": 1},
-             {"name": large_potion, "quantity": 0}, {"name": elixir, "quantity": 0},
-             {"name": large_elixir, "quantity": 0}, {"name": grenade, "quantity": 1}]
+    # Create Items
+    small_potion = Item("Small Potion", "potion", "Heals 50 HP", 50)
+    medium_potion = Item("Medium Potion", "potion", "Heals 100 HP", 100)
+    large_potion = Item("Large Potion", "potion", "Heals 100 HP", 500)
+    elixir = Item("Small Elixir", "elixir", "Restores full HP/MP of one party member", 9999)
+    large_elixir = Item("Large Elixir", "elixir", "Restores full HP/MP of all party members", 9999)
+    grenade = Item("Grenade", "attack", "Deals 500 damage", 500)
 
-# Create Black Magic
-fire = Spell("Fire", 10, 100, "black")
-thunder = Spell("thunder", 10, 100, "black")
-blizzard = Spell("blizzard", 10, 100, "black")
-meteor = Spell("meteor", 20, 200, "black")
-quake = Spell("quake", 14, 120, "black")
+    # Create Inventory
+    inventory = [{"name": small_potion, "quantity": 5}, {"name": medium_potion, "quantity": 1},
+                 {"name": large_potion, "quantity": 0}, {"name": elixir, "quantity": 0},
+                 {"name": large_elixir, "quantity": 0}, {"name": grenade, "quantity": 1}]
 
-# Create White Magic
-cure = Spell("Cure", 12, 120, "white")
-cura = Spell("Cura", 18, 200, "white")
+    # Create Black Magic
+    fire = Spell("Fire", 10, 100, "black")
+    thunder = Spell("Thunder", 10, 100, "black")
+    blizzard = Spell("Blizzard", 10, 100, "black")
+    meteor = Spell("Meteor", 20, 200, "black")
+    quake = Spell("Quake", 14, 120, "black")
 
-# Create Spell Book
-magic_book = [fire, thunder, blizzard, meteor, quake, cure, cura]
+    # Create White Magic
+    cure = Spell("Cure", 12, 120, "white")
+    cura = Spell("Cura", 18, 200, "white")
 
-# Instantiate Players, Enemies and NPCs
-player1 = Person("Extaza", 1460, 65, 60, 34, magic_book, inventory)
-player2 = Person("Kelroy", 1720, 20, 60, 34, magic_book, inventory)
-player3 = Person("Skadii", 1300, 95, 60, 34, magic_book, inventory)
-enemy = Person("Wild Homeless", 3200, 65, 245, 25, [], [])
+    # Create Spell Book
+    magic_book = [fire, thunder, blizzard, meteor, quake, cure, cura]
 
-party = [player1, player2, player3]
-
-enemyStr = bcolors.FAIL + bcolors.BOLD + "ENEMY" + bcolors.ENDC
-playerStr = bcolors.OKGREEN + bcolors.BOLD + "YOU" + bcolors.ENDC
-
-
-# Initiate The Game
-running = True
-action_taken = False
-print(bcolors.FAIL + bcolors.BOLD + "\nAN ENEMY ATTACKS!" + bcolors.ENDC)
+    # Instantiate Players, Enemies and NPCs
+    player1 = Person("Extaza", 1460, 65, 60, 34, magic_book, inventory)
+    player2 = Person("Kelroy", 1720, 20, 60, 34, magic_book, inventory)
+    player3 = Person("Skadii", 1300, 95, 60, 34, magic_book, inventory)
+    enemy = Person("Wild Homeless", 3200, 65, 245, 25, [], [])
+    party = [player1, player2, player3]
+    enemyStr = bcolors.FAIL + bcolors.BOLD + "ENEMY" + bcolors.ENDC
+    playerStr = bcolors.OKGREEN + bcolors.BOLD + "YOU" + bcolors.ENDC
 
 
 def use_magic():
@@ -67,7 +62,7 @@ def use_magic():
             return
 
         player1.choose_magic()
-        item_choice = input("Choose magic or type '0' to go back a menu :")
+        item_choice = input(bcolors.BOLD + bcolors.WARNING + "Choose magic or type '0' to go back a menu :" + bcolors.ENDC)
         index = int(item_choice) - 1
 
         if index == -1:
@@ -100,7 +95,7 @@ def use_magic():
 def use_item():
     global action_taken
     player1.choose_item()
-    item_choice = int(input("Choose item or type '0' to go back a menu :"))
+    item_choice = int(input(bcolors.BOLD + bcolors.WARNING + "Choose item or type '0' to go back a menu :" + bcolors.ENDC))
 
     index = int(item_choice) - 1
 
@@ -129,10 +124,11 @@ def use_item():
 
         player1.items[index]["quantity"] -= 1
 
+
 def use_melee():
     damage = player1.generate_damage()
     enemy.take_damage(damage)
-    print(playerStr, "attacked for", damage, "points of damage.    Enemy HP:", enemy.get_hp())
+    print(playerStr, "attacked for", damage, "points of damage.")
 
 
 def enemy_attack():
@@ -146,27 +142,37 @@ def enemy_attack():
         print(enemyStr, "attacks", player.name, "for", enemy_damage, "points of damage.")
 
 
+# Initiate The Game
+instantiate_game_parameters()
+running = True
+action_taken = False
+
+
 if __name__ == "__main__":
+
+    print(bcolors.FAIL + bcolors.BOLD + "\nAN ENEMY ATTACKS!" + bcolors.ENDC)
 
     while running:
 
         for player in party:
-            player.show_stats()
 
-        for player in party:
-
+            enemy.show_enemy_stats()
             print("\n")
-            print("NAME                 HP                                 MP")
-            player.show_stats()
+
+            for player in party:
+                player.show_stats()
+
+            print("\n" + bcolors.BOLD + bcolors.WARNING + player.name + "'s", "turn is up!" + bcolors.ENDC + "\n")
 
             action_taken = False
 
             while not action_taken:
 
-                print("===================================================")
+                print("==================================")
                 player.choose_action()
-                item_choice = input("Choose action:")
-                print("\n")
+                print("==================================")
+
+                item_choice = input(bcolors.BOLD + bcolors.WARNING + "Choose action:" + bcolors.ENDC)
                 index = int(item_choice) - 1
 
                 action_taken = True
@@ -184,16 +190,8 @@ if __name__ == "__main__":
                 print(enemyStr, "died! GOODJOB!!!")
                 break
 
-        enemy_attack()
-
-        print("---------------------------------")
-        print("Enemy HP:",
-              bcolors.FAIL + bcolors.BOLD + str(enemy.get_hp()) + "/" + str(enemy.get_maxhp()) + bcolors.ENDC)
-
-        print("\nYour HP:",
-              bcolors.OKGREEN + bcolors.BOLD + str(player.get_hp()) + "/" + str(player.get_maxhp()) + bcolors.ENDC)
-        print("Your MP:",
-              bcolors.OKBLUE + bcolors.BOLD + str(player.get_mp()) + "/" + str(player.get_maxmp()) + bcolors.ENDC)
+            enemy_attack()
+            print("\n")
 
         if player.get_hp() == 0:
             print(playerStr, "\ndied! GAMEOVER!!!")
