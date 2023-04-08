@@ -29,5 +29,5 @@ The enemy has the following stats:
 *
 During their turn, the enemy will attack the player.
 
-## uilt With
+## Built With
 Python 3
