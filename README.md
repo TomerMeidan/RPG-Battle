@@ -5,10 +5,10 @@ This is a text-based RPG battle simulator where the player faces off against an 
 To run the game, simply run the main.py file. The game requires Python 3 to be installed on your machine.
 
 ## Game Mechanics
-Player
+### Player
 The player has the following stats:
 
-HP (Health Points): represents the amount of damage the player can take before being defeated.
+#### HP (Health Points): represents the amount of damage the player can take before being defeated.
 MP (Magic Points): represents the amount of magic the player can use during battle.
 Attack Power: represents the amount of damage the player's physical attacks deal.
 Magic Power: represents the amount of damage the player's magic attacks deal.
