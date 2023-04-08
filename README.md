@@ -29,5 +29,15 @@ The enemy has the following stats:
 
 During their turn, the enemy will attack the player.
 
+## Features to come
+* Miss, critical hit mechanic
+* Revive downed unit (enemy or player)
+* Encounter enemy later on in-game
+* Walk through a small town
+* Create a store, tavern players can visit
+
 ## Built With
 Python 3
+
+
+
