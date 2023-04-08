@@ -1,20 +1,31 @@
-# RPG Battle Game
-This is an RPG battle game that is played with keyboard-based actions. The game includes several features such as melee attacks, magic attacks, and the use of items like potions, elixirs, and grenades.
+# RPG Battle Simulator
+This is a text-based RPG battle simulator where the player faces off against an enemy. The player has the option to attack, use magic, or use items during their turn, and the enemy will attack during their turn. The game continues until either the player or the enemy has been defeated.
 
-## How to Play
-To play the game, you must first download and install it on your computer. Once you have installed the game, you can start it by running the executable file.
+## Getting Started
+To run the game, simply run the main.py file. The game requires Python 3 to be installed on your machine.
 
-The game is played with keyboard-based actions. You can move your character around the screen using the arrow keys. You can perform melee attacks by pressing the "A" key and magic attacks by pressing the "M" key. You can also use items like potions, elixirs, and grenades by pressing the "I" key.
+## Game Mechanics
+Player
+The player has the following stats:
 
-## Features
-### Melee Attacks
-Melee attacks are a type of physical attack that can be performed by pressing the "A" key. These attacks are usually more powerful than magic attacks, but they require the player to be in close proximity to the enemy.
+HP (Health Points): represents the amount of damage the player can take before being defeated.
+MP (Magic Points): represents the amount of magic the player can use during battle.
+Attack Power: represents the amount of damage the player's physical attacks deal.
+Magic Power: represents the amount of damage the player's magic attacks deal.
+Magic Spells: a list of spells the player can use during battle.
+Inventory: a list of items the player can use during battle.
+During their turn, the player can:
 
-### Magic Attacks
-Magic attacks are a type of attack that can be performed by pressing the "M" key. These attacks are usually less powerful than melee attacks, but they can be performed from a distance. Magic attacks also have the added benefit of being able to inflict status effects on the enemy.
+Attack: deal damage to the enemy using physical attacks.
+Use Magic: use a spell to deal damage or heal the player.
+Use Item: use an item to heal the player, restore MP, or deal damage to the enemy.
+Enemy
+The enemy has the following stats:
 
-### Items
-The game includes several items that can be used to heal the player or damage the enemy. Potions and elixirs are used to restore the player's health, while grenades are used to deal damage to the enemy.
+HP (Health Points): represents the amount of damage the enemy can take before being defeated.
+Attack Power: represents the amount of damage the enemy's attacks deal.
+Magic Power: represents the amount of damage the enemy's magic attacks deal.
+During their turn, the enemy will attack the player.
 
-## Conclusion
-This RPG battle game is a fun and exciting way to spend your time. With its keyboard-based actions, melee attacks, magic attacks, and item system, the game provides a unique and challenging experience for players of all skill levels. So why not give it a try and see if you have what it takes to emerge victorious in battle!
+Built With
+Python 3
